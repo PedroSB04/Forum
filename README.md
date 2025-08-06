@@ -13,3 +13,17 @@ Tecnologias Utilizadas:
 FrontEnd: HTML, CSS e JavaScript
 BackEnd: Python (Framework Flask)
 Banco de Dados: PostgreSQL
+
+Backlog do produto:
+
+#1: Como usuário, eu gostaria de uma tela de Cadastro
+#2 Como usuário, eu gostaria de uma tela de login
+#3 Como usuário, eu gostaria de uma tela de navegação principal (HOME)
+#4 Como usuário, eu gostaria de publicar uma pergunta
+#5 Como usuário, eu gostaria de um sistema de respostas
+#6 Como usuário, eu gostaria de um sistema de votos
+#7 Como usuário, eu gostaria de uma organização por categorias
+#8 Como usuário, eu gostaria de uma ordenação dos posts por relevância
+#9 Como usuário, eu gostaria de um botão de pesquisa
+#10 Como usuário, eu gostaria de uma tela de perfil 
+
