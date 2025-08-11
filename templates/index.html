@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevForum</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">DevForum</div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </header>
+
+        <div class="search-section">
+            <div class="search-controls">
+                <input type="text" class="search-input" placeholder="Buscar tópicos..." id="searchInput">
+                <button class="select-button" onclick="toggleCategories()">Todas as Categorias</button>
+                <button class="filter-button" onclick="openFilter()">Filtrar</button>
+            </div>
+        </div>
+
+        <div class="discussions-section">
+            <h2 class="discussions-header">Discussões Recentes</h2>
+            <div class="empty-state">
+                <div class="empty-icon"></div>
+                <div class="empty-title">Nenhum tópico encontrado</div>
+                <div class="empty-subtitle">Seja o primeiro a iniciar uma discussão!</div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-header">Sobre o DevForum</div>
+            <div class="info-content">
+                Um fórum dirigido pela comunidade onde desenvolvedores compartilham conhecimento, discutem tecnologias e se ajudam a crescer.
+                <button class="join-button" onclick="joinCommunity()">Junte-se à Comunidade</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
