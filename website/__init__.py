@@ -1,12 +1,8 @@
 from flask import Flask
-import os
-
-
 
 def create_app():
 
-    base_dir = os.path.abspath(os.path.dirname(__file__))
-    app = Flask(__name__, static_folder=os.path.join(base_dir, 'static'), template_folder=os.path.join(base_dir, 'templates'))
+    app = Flask(__name__, static_folder='static', template_folder='templates')
     app.config['SECRET_KEY'] = 'fjibguirehwgiuheriu'
     
     from .views import views
