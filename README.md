@@ -7,7 +7,8 @@ Pedro de Sousa Barroso - FrontEnd
 Nathan Almeida Rezende - BackEnd
 Bernardo Soroldani - FrontEnd
 Davi Zanotti - Banco de Dados
-Enzo Cunha - BackEnd
+Enzo Cunha - BackEnd 
+
 
 Tecnologias Utilizadas: 
 FrontEnd: HTML, CSS e JavaScript
