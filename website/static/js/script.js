@@ -1,22 +1,74 @@
-// Função para alternar o menu hambúrguer
+// Função para alternar o menu 
 function toggleMenu() {
-    const hamburger = document.querySelector('.hamburger');
-    const spans = hamburger.querySelectorAll('span');
-    
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('menuOverlay');
+    const body = document.body;
+
     hamburger.classList.toggle('active');
-    
-    if (hamburger.classList.contains('active')) {
-        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-        spans[1].style.opacity = '0';
-        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+    mobileMenu.classList.toggle('active');
+    overlay.classList.toggle('active');
+
+    if (mobileMenu.classList.contains('active')) {
+        body.style.overflow = 'hidden';
+        console.log('Menu opened');
     } else {
-        spans[0].style.transform = 'none';
-        spans[1].style.opacity = '1';
-        spans[2].style.transform = 'none';
+        body.style.overflow = '';
+        console.log('Menu closed');
     }
+}
+
+// Função para fechar o menu
+function closeMenu() {
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('menuOverlay');
+    const body = document.body;
+
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+    overlay.classList.remove('active');
+
+    body.style.overflow = '';
     
-    // Simular abertura de menu
-    console.log('Menu toggled');
+    console.log('Menu closed');
+}
+
+// Função para navegação
+function navigateTo(page) {
+    console.log(`Navigating to: ${page}`);
+    
+    // Fechar o menu
+    closeMenu();
+    
+    // Simular navegação com feedback visual
+    const menuLinks = document.querySelectorAll('.menu-link');
+    menuLinks.forEach(link => {
+        if (link.textContent.toLowerCase().includes(page)) {
+            link.style.background = 'rgba(16, 185, 129, 0.2)';
+            link.style.borderLeftColor = '#10b981';
+            
+            setTimeout(() => {
+                link.style.background = '';
+                link.style.borderLeftColor = 'transparent';
+            }, 1000);
+        }
+    });
+    
+    // Aqui você pode adicionar a lógica real de navegação
+    switch(page) {
+        case 'inicio':
+            alert('Redirecionando para a página inicial...');
+            break;
+        case 'entrar':
+            alert('Abrindo página de login...');
+            break;
+        case 'cadastrar':
+            alert('Abrindo página de cadastro...');
+            break;
+        default:
+            console.log('Página não encontrada');
+    }
 }
 
 // Função para alternar categorias
@@ -70,8 +122,8 @@ function joinCommunity() {
     console.log('Joining community');
 }
 
-// Funcionalidade de busca
 document.addEventListener('DOMContentLoaded', function() {
+    // Funcionalidade de busca
     const searchInput = document.getElementById('searchInput');
     
     if (searchInput) {
@@ -79,10 +131,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const searchTerm = e.target.value;
             
             if (searchTerm.length > 0) {
-                // Simular busca
                 console.log('Searching for:', searchTerm);
                 
-                // Adicionar efeito visual durante a busca
                 const emptyState = document.querySelector('.empty-state');
                 if (emptyState) {
                     emptyState.style.opacity = '0.5';
@@ -94,10 +144,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-});
 
-// Efeitos de hover melhorados
-document.addEventListener('DOMContentLoaded', function() {
+    // Efeitos de hover melhorados
     const buttons = document.querySelectorAll('.select-button, .filter-button');
     
     buttons.forEach(button => {
@@ -108,6 +156,23 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('mouseleave', function() {
             this.style.boxShadow = 'none';
         });
+    });
+
+    // Fechar menu ao pressionar ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu && mobileMenu.classList.contains('active')) {
+                closeMenu();
+            }
+        }
+    });
+
+    // Fechar menu ao redimensionar a tela
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            closeMenu();
+        }
     });
 });
 
