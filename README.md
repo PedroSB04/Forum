@@ -28,3 +28,5 @@ Backlog do produto:
 #9 Como usuário, eu gostaria de um botão de pesquisa
 #10 Como usuário, eu gostaria de uma tela de perfil 
 
+Diagramas UML:
+Diagrama de classes: <img width="886" height="426" alt="image" src="https://github.com/user-attachments/assets/b408215d-59d5-4e3e-a7ea-014bde9c7fb3" /> 
