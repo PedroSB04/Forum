@@ -30,7 +30,11 @@ Backlog do produto:
 
 Diagramas UML:
 Diagrama de classes: <img width="886" height="426" alt="image" src="https://github.com/user-attachments/assets/b408215d-59d5-4e3e-a7ea-014bde9c7fb3" /> 
+
+
 Diagramas de atividades: 
+
+
 <img width="413" height="486" alt="image" src="https://github.com/user-attachments/assets/4d3f2749-1203-4840-9bcc-08402e3ad127" />
 <img width="836" height="441" alt="image" src="https://github.com/user-attachments/assets/058cf411-780f-4d41-991d-6d05847c8bf9" />
 <img width="347" height="409" alt="image" src="https://github.com/user-attachments/assets/e92a26d8-8c10-4a27-b29e-5bafca93edcd" />
@@ -41,6 +45,7 @@ Diagramas de atividades:
 <img width="312" height="367" alt="image" src="https://github.com/user-attachments/assets/545b31bd-2054-45b2-a687-7724ef0d73a2" />
 <img width="274" height="328" alt="image" src="https://github.com/user-attachments/assets/5270e7f3-6370-4be6-89b0-6746f8687ca4" />
 <img width="357" height="289" alt="image" src="https://github.com/user-attachments/assets/e87f69e7-56d6-40c1-8348-9996bb2c5dc3" />
+
 
 Diagrama de casos de uso:
 <img width="952" height="720" alt="image" src="https://github.com/user-attachments/assets/124e9e54-c3d8-4a4b-92e8-a934a2ddc84f" />
