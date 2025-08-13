@@ -1,0 +1,39 @@
+CREATE TABLE usuario (
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	username VARCHAR (20) NOT NULL UNIQUE,
+	email VARCHAR (100) NOT NULL UNIQUE,
+	senha VARCHAR (30) NOT NULL,
+	foto_perfil VARCHAR (255)
+);
+
+CREATE TABLE segue (
+    seguidor_id INT NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    seguido_id  INT NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    PRIMARY KEY (seguidor_id, seguido_id),
+    CONSTRAINT seguidor_diferente CHECK (seguidor_id <> seguido_id)
+);
+
+CREATE TABLE post (
+	id_post SERIAL PRIMARY KEY,
+	titulo VARCHAR (100) NOT NULL,
+	conteudo TEXT NOT NULL,
+	data_post TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	likes INT,
+	dislikes INT,
+	
+	id_usuario INT NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    post_raiz_id INT REFERENCES post(id_post) ON DELETE CASCADE,
+    CONSTRAINT resposta_valida CHECK ((post_raiz_id IS NULL) OR (post_raiz_id <> id_post))
+)
+
+CREATE TABLE categoria (
+	id_categoria SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL UNIQUE
+)
+
+CREATE TABLE post_categoria (
+	id_post INT NOT NULL REFERENCES post(id_post) ON DELETE CASCADE,
+	id_categoria INT NOT NULL REFERENCES categoria(id_categoria) ON DELETE CASCADE,
+	PRIMARY KEY (id_post, id_categoria)
+)
