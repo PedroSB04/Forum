@@ -18,15 +18,25 @@ Banco de Dados: PostgreSQL
 Backlog do produto:
 
 #1: Como usuário, eu gostaria de uma tela de Cadastro
+
 #2 Como usuário, eu gostaria de uma tela de login
+
 #3 Como usuário, eu gostaria de uma tela de navegação principal (HOME)
+
 #4 Como usuário, eu gostaria de publicar uma pergunta
+
 #5 Como usuário, eu gostaria de um sistema de respostas
+
 #6 Como usuário, eu gostaria de um sistema de votos
+
 #7 Como usuário, eu gostaria de uma organização por categorias
+
 #8 Como usuário, eu gostaria de uma ordenação dos posts por relevância
+
 #9 Como usuário, eu gostaria de um botão de pesquisa
+
 #10 Como usuário, eu gostaria de uma tela de perfil 
+
 
 DIAGRAMAS UML DO PROJETO:
 
@@ -46,6 +56,7 @@ Diagramas de atividades:
 <img width="312" height="367" alt="image" src="https://github.com/user-attachments/assets/545b31bd-2054-45b2-a687-7724ef0d73a2" />
 <img width="274" height="328" alt="image" src="https://github.com/user-attachments/assets/5270e7f3-6370-4be6-89b0-6746f8687ca4" />
 <img width="357" height="289" alt="image" src="https://github.com/user-attachments/assets/e87f69e7-56d6-40c1-8348-9996bb2c5dc3" />
+
 
 
 Diagrama de casos de uso:
