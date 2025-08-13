@@ -65,13 +65,18 @@ Diagrama de casos de uso:
 <img width="952" height="720" alt="image" src="https://github.com/user-attachments/assets/124e9e54-c3d8-4a4b-92e8-a934a2ddc84f" />
 
 
+Protótipos das telas:
+
+<img width="1229" height="907" alt="Captura de tela 2025-08-12 133645" src="https://github.com/user-attachments/assets/03de2f27-726d-482b-a215-f53a87c6b44c" />
 
 
+<img width="525" height="496" alt="Captura de tela 2025-08-12 133834" src="https://github.com/user-attachments/assets/10cd8339-7542-4050-9e3e-58cd2ed90f4c" />
 
 
+<img width="487" height="592" alt="Captura de tela 2025-08-12 133838" src="https://github.com/user-attachments/assets/c26323bf-9191-4700-8b5a-380a2bc57d3a" />
 
 
-
+<img width="539" height="699" alt="Captura de tela 2025-08-12 134320" src="https://github.com/user-attachments/assets/1664802f-de40-443d-a775-363661234f92" />
 
 
 
