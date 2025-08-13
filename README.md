@@ -38,6 +38,8 @@ Backlog do produto:
 #10 Como usuário, eu gostaria de uma tela de perfil 
 
 
+
+
 DIAGRAMAS UML DO PROJETO:
 
 Diagrama de classes: <img width="886" height="426" alt="image" src="https://github.com/user-attachments/assets/b408215d-59d5-4e3e-a7ea-014bde9c7fb3" /> 
