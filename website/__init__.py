@@ -1,4 +1,6 @@
 from flask import Flask
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
 
 def create_app():    
 
@@ -7,6 +9,10 @@ def create_app():
     
     from .views import views
     from .auth import auth
+
+    bcrypt = Bcrypt(app)
+    Login_manager = LoginManager(app)
+    Login_manager.login_view = 'auth.login'
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
