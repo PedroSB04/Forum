@@ -48,4 +48,3 @@ def discussao(post_raiz_id):
         posts_filhos=posts_filhos,
         form=form
     )
-
