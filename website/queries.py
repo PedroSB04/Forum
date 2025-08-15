@@ -3,6 +3,8 @@ from flask_login import current_user
 from forms import Formlogin, Formsignup
 import db
 
+from website.database import execute_sql
+
 novo_usuario = db.User (
     Formsignup.username.data,
     Formsignup.email.data,
@@ -81,4 +83,5 @@ def Informacoes_Perfil(usuario_id):
         "seguidores": usuario.seguidores,
         "posts": Buscar_Posts_Por_Usuario(usuario_id)
     }
+###########################
 

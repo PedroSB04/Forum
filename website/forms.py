@@ -10,6 +10,7 @@ class Formlogin(FlaskForm):
     botao_de_confirmacao = SubmitField("Fazer Login")
 
 class Formsignup(FlaskForm):
+    nome = StringField("Nome Completo", validators=[DataRequired(), Length(min=2, max=100)])
     username = StringField("Nome de Usuário", validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField("E-mail", validators=[DataRequired(), Email()])
     senha = PasswordField("Senha", validators=[DataRequired(), Length(min=6)])
@@ -21,3 +22,12 @@ class Formsignup(FlaskForm):
         resultado = execute_sql(query, (email.data,), fetch_one=True)
         if resultado:
             raise ValidationError("Esse e-mail já está em uso.")
+        
+class FormpostPai(FlaskForm):
+    titulo = StringField("Título", validators=[DataRequired(), Length(min=2, max=100)])
+    conteudo = StringField("Conteúdo", validators=[DataRequired()])
+    botao_de_confirmacao = SubmitField("Criar Post")    
+
+class FormpostFilho(FlaskForm):
+    conteudo = StringField("Conteúdo", validators=[DataRequired()])
+    botao_de_confirmacao = SubmitField("Comentar")
