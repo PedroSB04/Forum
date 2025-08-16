@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for
 from website.forms import FormpostPai, FormpostFilho
 from website.database import execute_sql
 from flask_login import current_user
+from flask_login import login_required
 
 views = Blueprint('views', __name__)
 
@@ -9,11 +10,18 @@ views = Blueprint('views', __name__)
 def home():
     return render_template('index.html')
 
-@views.route('/perfil')
-def perfil():
-    return render_template('perfil.html')
+@views.route('/perfil/<int:id_usuario>')
+@login_required
+def perfil(id_usuario):
+    if current_user.is_authenticated and int(id_usuario) == current_user.id_usuario:
+        # Usuário está vendo o próprio perfil
+        return render_template('perfil.html', usuario=current_user)
+    else:
+        usuario = execute_sql("SELECT * FROM usuario WHERE id_usuario = %s", (id_usuario,), fetch_one=True)
+        return render_template('perfil.html', usuario=usuario)
 
 @views.route('/criarpost', methods=['GET', 'POST'])
+@login_required
 def criar_post():
     form = FormpostPai()
     if form.validate_on_submit():

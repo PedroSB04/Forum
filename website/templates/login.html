@@ -6,7 +6,23 @@
 </head>
 <body>
     <h1>Página de Login</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.email.label }}<br>
+            {{ form.email(size=32) }}
+        </div>
+        <div>
+            {{ form.senha.label }}<br>
+            {{ form.senha(size=32) }}
+        </div>
+        <div>
+            {{ form.botao_de_confirmacao() }}
+        </div>
+        {% if erro %}
+            <p style="color:red">{{ erro }}</p>
+        {% endif %}
+    </form>
 </body>
 </html>
 
-            

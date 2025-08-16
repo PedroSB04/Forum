@@ -5,6 +5,21 @@
     <title>Perfil - DevForum</title>
 </head>
 <body>
-    <h1>Página de Perfil</h1>
+    <h1>Perfil do Usuário</h1>
+    {% if usuario %}
+        <p><strong>Nome:</strong> {{ usuario.nome }}</p>
+        <p><strong>Username:</strong> {{ usuario.username }}</p>
+        <p><strong>Email:</strong> {{ usuario.email }}</p>
+        {% if usuario.foto_perfil %}
+            <img src="{{ usuario.foto_perfil }}" alt="Foto de Perfil" width="120">
+        {% else %}
+            <p>Sem foto de perfil.</p>
+        {% endif %}
+        <form action="{{ url_for('auth.logout') }}" method="get">
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <p>Usuário não encontrado.</p>
+    {% endif %}
 </body>
 </html>

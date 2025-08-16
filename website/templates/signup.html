@@ -6,5 +6,31 @@
 </head>
 <body>
     <h1>Página de Cadastro</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.nome.label }}<br>
+            {{ form.nome(size=32) }}
+        </div>
+        <div>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}
+        </div>
+        <div>
+            {{ form.email.label }}<br>
+            {{ form.email(size=32) }}
+        </div>
+        <div>
+            {{ form.senha.label }}<br>
+            {{ form.senha(size=32) }}
+        </div>
+        <div>
+            {{ form.confirmar_senha.label }}<br>
+            {{ form.confirmar_senha(size=32) }}
+        </div>
+        <div>
+            {{ form.botao_de_confirmacao() }}
+        </div>
+    </form>
 </body>
 </html>

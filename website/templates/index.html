@@ -22,17 +22,17 @@
         <nav class="mobile-menu" id="mobileMenu">
             <ul class="menu-list">
                 <li class="menu-item">
-                    <a href="#" class="menu-link" onclick="navigateTo('inicio')">
+                    <a href="{{ url_for('views.home') }}" class="menu-link">
                         🏠 Início
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="#" class="menu-link" onclick="navigateTo('entrar')">
+                    <a href="{{ url_for('auth.login') }}" class="menu-link">
                         🔐 Entrar
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="#" class="menu-link" onclick="navigateTo('cadastrar')">
+                    <a href="{{ url_for('auth.signup') }}" class="menu-link">
                         👤 Cadastrar
                     </a>
                 </li>
@@ -60,7 +60,9 @@
             <div class="info-header">Sobre o DevForum</div>
             <div class="info-content">
                 Um fórum dirigido pela comunidade onde desenvolvedores compartilham conhecimento, discutem tecnologias e se ajudam a crescer.
-                <button class="join-button" onclick="joinCommunity()">Junte-se à Comunidade</button>
+                <form action="{{ url_for('auth.signup') }}" method="get">
+                    <button type="submit" class="join-button">Junte-se à Comunidade</button>
+                </form>
             </div>
         </div>
     </div>
