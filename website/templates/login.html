@@ -2,27 +2,60 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Login - DevForum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevForum - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Página de Login</h1>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        <div>
-            {{ form.email.label }}<br>
-            {{ form.email(size=32) }}
+    <div class="header">
+        <div class="header-content">
+            <span class="header-icon">&lt;/&gt;</span>
+            <span>DevForum</span>
         </div>
-        <div>
-            {{ form.senha.label }}<br>
-            {{ form.senha(size=32) }}
+    </div>
+
+    <div class="main-content">
+        <div class="login-container">
+            <div class="login-header">
+                <h1 class="login-title">Entrar na Comunidade</h1>
+                <p class="login-subtitle">Faça login para participar das discussões</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-input" 
+                        placeholder="seu@email.com"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Senha</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="form-input" 
+                        placeholder="Sua senha"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="login-button">Entrar</button>
+            </form>
         </div>
-        <div>
-            {{ form.botao_de_confirmacao() }}
-        </div>
-        {% if erro %}
-            <p style="color:red">{{ erro }}</p>
-        {% endif %}
-    </form>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Impede o envio padrão do formulário
+        window.location.href = "{{ url_for('views.home') }}"; // Redireciona para a página inicial
+    });
+    </script>
 </body>
 </html>
 
