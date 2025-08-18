@@ -2,35 +2,85 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro - DevForum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Comunidade</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Página de Cadastro</h1>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        <div>
-            {{ form.nome.label }}<br>
-            {{ form.nome(size=32) }}
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <span class="header-icon">&lt;/&gt;</span>
+            <span>DevForum</span>
         </div>
-        <div>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <div class="signup-container">
+            <div class="signup-header">
+                <h1 class="signup-title">Junte-se à Comunidade</h1>
+                <p class="signup-subtitle">Crie sua conta e comece a participar das discussões</p>
+            </div>
+
+            <form id="signupForm">
+                <div class="form-group">
+                    <label class="form-label" for="username">Nome de Usuário</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        class="form-input" 
+                        placeholder="seuusuario"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-input" 
+                        placeholder="seu@email.com"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Senha</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="form-input" 
+                        placeholder="Mínimo 8 caracteres"
+                        minlength="8"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="confirmPassword">Confirmar Senha</label>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        class="form-input" 
+                        placeholder="Repita sua senha"
+                        minlength="8"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="signup-button" data-login-url="{{ url_for('auth.login') }}">
+                    Cadastrar
+                </button>
+
+                <div class="login-link">
+                    Já tem uma conta? <a href="/login">Fazer login</a>
+                </div>
+            </form>
         </div>
-        <div>
-            {{ form.email.label }}<br>
-            {{ form.email(size=32) }}
-        </div>
-        <div>
-            {{ form.senha.label }}<br>
-            {{ form.senha(size=32) }}
-        </div>
-        <div>
-            {{ form.confirmar_senha.label }}<br>
-            {{ form.confirmar_senha(size=32) }}
-        </div>
-        <div>
-            {{ form.botao_de_confirmacao() }}
-        </div>
-    </form>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

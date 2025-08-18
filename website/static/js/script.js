@@ -5,16 +5,16 @@ function toggleMenu() {
     const overlay = document.getElementById('menuOverlay');
     const body = document.body;
 
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-    overlay.classList.toggle('active');
+    if (hamburger && mobileMenu && overlay) {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        overlay.classList.toggle('active');
 
-    if (mobileMenu.classList.contains('active')) {
-        body.style.overflow = 'hidden';
-        console.log('Menu opened');
-    } else {
-        body.style.overflow = '';
-        console.log('Menu closed');
+        if (mobileMenu.classList.contains('active')) {
+            body.style.overflow = 'hidden';
+        } else {
+            body.style.overflow = '';
+        }
     }
 }
 
@@ -25,49 +25,11 @@ function closeMenu() {
     const overlay = document.getElementById('menuOverlay');
     const body = document.body;
 
-    hamburger.classList.remove('active');
-    mobileMenu.classList.remove('active');
-    overlay.classList.remove('active');
-
-    body.style.overflow = '';
-    
-    console.log('Menu closed');
-}
-
-// Função para navegação
-function navigateTo(page) {
-    console.log(`Navigating to: ${page}`);
-    
-    // Fechar o menu
-    closeMenu();
-    
-    // Simular navegação com feedback visual
-    const menuLinks = document.querySelectorAll('.menu-link');
-    menuLinks.forEach(link => {
-        if (link.textContent.toLowerCase().includes(page)) {
-            link.style.background = 'rgba(16, 185, 129, 0.2)';
-            link.style.borderLeftColor = '#10b981';
-            
-            setTimeout(() => {
-                link.style.background = '';
-                link.style.borderLeftColor = 'transparent';
-            }, 1000);
-        }
-    });
-    
-    // Aqui você pode adicionar a lógica real de navegação
-    switch(page) {
-        case 'inicio':
-            alert('Redirecionando para a página inicial...');
-            break;
-        case 'entrar':
-            alert('Abrindo página de login...');
-            break;
-        case 'cadastrar':
-            alert('Abrindo página de cadastro...');
-            break;
-        default:
-            console.log('Página não encontrada');
+    if (hamburger && mobileMenu && overlay) {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        body.style.overflow = '';
     }
 }
 
@@ -75,51 +37,51 @@ function navigateTo(page) {
 function toggleCategories() {
     const button = document.querySelector('.select-button');
     
-    // Simular dropdown de categorias
-    if (button.textContent === 'Todas as Categorias') {
-        button.textContent = 'JavaScript';
-        setTimeout(() => {
-            button.textContent = 'Todas as Categorias';
-        }, 2000);
+    if (button) {
+        // Simular dropdown de categorias
+        if (button.textContent === 'Todas as Categorias') {
+            button.textContent = 'JavaScript';
+            setTimeout(() => {
+                button.textContent = 'Todas as Categorias';
+            }, 2000);
+        }
     }
-    
-    console.log('Categories toggled');
 }
 
 // Função para abrir filtros
 function openFilter() {
     const filterButton = document.querySelector('.filter-button');
     
-    // Animação de clique
-    filterButton.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        filterButton.style.transform = 'translateY(-1px)';
-    }, 100);
-    
-    // Simular abertura de filtros
-    console.log('Filter opened');
+    if (filterButton) {
+        // Animação de clique
+        filterButton.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            filterButton.style.transform = 'translateY(-1px)';
+        }, 100);
+    }
 }
 
 // Função para juntar-se à comunidade
 function joinCommunity() {
     const button = document.querySelector('.join-button');
-    const originalText = button.textContent;
     
-    button.textContent = 'Juntando-se...';
-    button.style.transform = 'scale(0.98)';
-    
-    setTimeout(() => {
-        button.textContent = '✅ Bem-vindo à comunidade!';
-        button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+    if (button) {
+        const originalText = button.textContent;
+        
+        button.textContent = 'Juntando-se...';
+        button.style.transform = 'scale(0.98)';
         
         setTimeout(() => {
-            button.textContent = originalText;
-            button.style.background = 'linear-gradient(135deg, #6366f1, #8b5cf6)';
-            button.style.transform = 'translateY(-2px)';
-        }, 3000);
-    }, 1500);
-    
-    console.log('Joining community');
+            button.textContent = '✅ Bem-vindo à comunidade!';
+            button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = 'linear-gradient(135deg, #6366f1, #8b5cf6)';
+                button.style.transform = 'translateY(-2px)';
+            }, 3000);
+        }, 1500);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -131,8 +93,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const searchTerm = e.target.value;
             
             if (searchTerm.length > 0) {
-                console.log('Searching for:', searchTerm);
-                
                 const emptyState = document.querySelector('.empty-state');
                 if (emptyState) {
                     emptyState.style.opacity = '0.5';
@@ -174,7 +134,106 @@ document.addEventListener('DOMContentLoaded', function() {
             closeMenu();
         }
     });
+
+    // VALIDAÇÃO DO FORMULÁRIO DE CADASTRO
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+        signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            
+            // Validações
+            if (username.length < 3) {
+                alert('O nome de usuário deve ter pelo menos 3 caracteres');
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                alert('Por favor, insira um email válido');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('A senha deve ter pelo menos 8 caracteres');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('As senhas não coincidem');
+                return;
+            }
+            
+            // Simulação de sucesso
+            alert('Conta criada com sucesso! Redirecionando para login...');
+            // Redirecionar para página de login
+            window.location.href = '/login';
+        });
+    }
+
+    // VALIDAÇÃO DO FORMULÁRIO DE LOGIN
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Validações básicas
+            if (!email || !password) {
+                alert('Por favor, preencha todos os campos');
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                alert('Por favor, insira um email válido');
+                return;
+            }
+            
+            // Simulação de login bem-sucedido
+            alert('Login realizado com sucesso! Redirecionando...');
+            
+            // Redirecionar para página inicial
+            window.location.href = '/';
+        });
+    }
 });
+
+    // Adiciona feedback visual aos campos
+    const inputs = document.querySelectorAll('.form-input');
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (this.value && this.checkValidity()) {
+                this.style.borderColor = '#10b981';
+            } else if (this.value && !this.checkValidity()) {
+                this.style.borderColor = '#ef4444';
+            } else {
+                this.style.borderColor = '';
+            }
+        });
+    });
+
+    // Validação em tempo real das senhas (apenas para formulário de cadastro)
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+
+    if (passwordInput && confirmPasswordInput) {
+        confirmPasswordInput.addEventListener('input', function() {
+            if (this.value && passwordInput.value) {
+                if (this.value === passwordInput.value) {
+                    this.style.borderColor = '#10b981';
+                } else {
+                    this.style.borderColor = '#ef4444';
+                }
+            } else {
+                this.style.borderColor = '';
+            }
+        });
+    }
 
 // Animação de carregamento inicial
 window.addEventListener('load', function() {
@@ -185,3 +244,4 @@ window.addEventListener('load', function() {
         document.body.style.opacity = '1';
     }, 100);
 });
+

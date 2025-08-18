@@ -29,7 +29,7 @@ body {
     margin-bottom: 40px;
 }
 
-/* Header fixo (para página de login) */
+/* Header fixo (para página de login/cadastro) */
 .header.fixed {
     position: fixed;
     top: 0;
@@ -398,14 +398,28 @@ body {
     box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
 }
 
-/* Conteúdo principal (para login) */
+/* Conteúdo principal (página de login/cadastro) */
 .main-content {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;         /* Centraliza verticalmente */
-    padding: 0 20px;       /* Apenas padding lateral */
+    min-height: 100vh;
+    padding: 0 20px;
+}
+
+/* Container de cadastro */
+.signup-container {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 32px;
+    width: 100%;
+    max-width: 420px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    margin: 0 16px;
+    animation: fadeIn 0.6s ease forwards;
 }
 
 /* Container de login */
@@ -417,8 +431,27 @@ body {
     width: 100%;
     max-width: 380px;
     backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.25); /* sombra para destacar */
-    margin: 0 16px; /* espaçamento lateral em telas pequenas */
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    margin: 0 16px;
+    animation: fadeIn 0.6s ease forwards;
+}
+
+.signup-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.signup-title {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.signup-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    font-weight: 400;
 }
 
 .login-header {
@@ -464,7 +497,7 @@ body {
 }
 
 .form-input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .form-input:focus {
@@ -474,24 +507,126 @@ body {
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
-.login-button {
+.signup-button {
     width: 100%;
-    padding: 10px 24px;
+    padding: 12px 24px;
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
     border: none;
     border-radius: 6px;
     color: white;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 8px;
     margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.signup-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.signup-button:hover::before {
+    left: 100%;
+}
+
+.signup-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+}
+
+.signup-button:active {
+    transform: translateY(0);
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.login-button:hover::before {
+    left: 100%;
 }
 
 .login-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+/* Link de login */
+.login-link {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.login-link a:hover {
+    color: #8b5cf6;
+    text-decoration: underline;
+}
+
+/* Links do footer */
+.footer-links {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-links a {
+    color: #6366f1;
+    text-decoration: none;
+    font-size: 13px;
+    margin: 0 8px;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #8b5cf6;
+    text-decoration: underline;
 }
 
 /* Animações */
@@ -504,18 +639,6 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.search-section, .discussions-section, .info-section {
-    animation: fadeIn 0.6s ease forwards;
-}
-
-.discussions-section {
-    animation-delay: 0.1s;
-}
-
-.info-section {
-    animation-delay: 0.2s;
 }
 
 /* Media queries */
@@ -543,12 +666,23 @@ body {
 }
 
 @media (max-width: 480px) {
-    .login-container {
+    .signup-container, .login-container {
         padding: 24px;
         margin: 0 16px;
     }
 
     .header.fixed {
         padding: 12px 16px;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .footer-links a {
+        display: block;
+        margin: 0;
     }
 }

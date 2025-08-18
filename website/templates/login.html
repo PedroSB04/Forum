@@ -44,18 +44,12 @@
                     >
                 </div>
 
-                <button type="submit" class="login-button">Entrar</button>
+                <button type="submit" class="login-button" data-home-url="{{ url_for('views.home') }}">Entrar</button>
             </form>
         </div>
     </div>
 
-    <script src="script.js"></script>
-    <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault(); // Impede o envio padrão do formulário
-        window.location.href = "{{ url_for('views.home') }}"; // Redireciona para a página inicial
-    });
-    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
 
