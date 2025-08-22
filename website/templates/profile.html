@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevForum - Perfil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+    
+    <div class="container">
+        <header class="header">
+            <div class="logo">DevForum</div>
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </header>
+
+        <nav class="mobile-menu" id="mobileMenu">
+            <ul class="menu-list">
+                <li class="menu-item">
+                    <a href="{{ url_for('views.home') }}" class="menu-link">
+                        🏠 Início
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ url_for('views.profile') }}" class="menu-link active">
+                        👤 Perfil
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" onclick="logout()">
+                        🚪 Sair
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Seção de Informações do Perfil -->
+        <div class="profile-section">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <div class="avatar-circle" id="avatarCircle">
+                        <span class="avatar-initials" id="avatarInitials">JD</span>
+                    </div>
+                    <button class="avatar-upload-btn" onclick="changeAvatar()">
+                        📷 Alterar Foto
+                    </button>
+                </div>
+                
+                <div class="profile-info">
+                    <h1 class="profile-name" id="profileName">João Developer</h1>
+                    <p class="profile-joined">Membro desde Janeiro 2024</p>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">127</span>
+                            <span class="stat-label">Posts</span>
+                        </div>
+                        <div class="stat-item">
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">892</span>
+                            <span class="stat-label">Curtidas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de Edição de Perfil -->
+        <div class="edit-profile-section">
+            <div class="section-header">
+                <h2 class="section-title">✏️ Editar Perfil</h2>
+            </div>
+            
+            <form id="profileForm" class="profile-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="displayName">Nome de Exibição</label>
+                        <input 
+                            type="text" 
+                            id="displayName" 
+                            class="form-input" 
+                            value="João Developer"
+                            placeholder="Seu nome completo"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="username">Nome de Usuário</label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            class="form-input" 
+                            value="joaodev"
+                            placeholder="seuusuario"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-input" 
+                        value="joao@developer.com"
+                        placeholder="seu@email.com"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="bio">Biografia</label>
+                    <textarea 
+                        id="bio" 
+                        class="form-textarea" 
+                        rows="4"
+                        placeholder="Conte um pouco sobre você e suas tecnologias favoritas..."
+                    >Desenvolvedor Full Stack apaixonado por JavaScript, Python e tecnologias web modernas. Sempre em busca de novos desafios e aprendizado contínuo!</textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="save-button">
+                        💾 Salvar Alterações
+                    </button>
+                    <button type="button" class="cancel-button" onclick="resetForm()">
+                        ❌ Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
