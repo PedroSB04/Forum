@@ -3,6 +3,7 @@ from website.forms import FormpostPai, FormpostFilho
 from website.database import execute_sql
 from flask_login import current_user
 from flask_login import login_required
+from datetime import datetime
 
 views = Blueprint('views', __name__)
 
@@ -13,12 +14,60 @@ def home():
 @views.route('/perfil/<int:id_usuario>')
 @login_required
 def perfil(id_usuario):
+    # Busca as informações do usuário do perfil visitado
+    usuario = execute_sql("SELECT * FROM usuario WHERE id_usuario = %s", (id_usuario,), fetch_one=True)
+
+    # Busca quantidade de posts
+    qtd_posts = execute_sql("SELECT COUNT(*) FROM post WHERE id_usuario = %s", (id_usuario,), fetch_one=True)
+    qtd_posts = qtd_posts['count'] if qtd_posts else 0
+
+    # Busca quantidade de seguidores
+    qtd_seguidores = execute_sql("SELECT COUNT(*) FROM segue WHERE seguido_id = %s", (id_usuario,), fetch_one=True)
+    qtd_seguidores = qtd_seguidores['count'] if qtd_seguidores else 0
+
+    # Busca quantidade de quem segue
+    qtd_seguindo = execute_sql("SELECT COUNT(*) FROM segue WHERE seguidor_id = %s", (id_usuario,), fetch_one=True)
+    qtd_seguindo = qtd_seguindo['count'] if qtd_seguindo else 0
+
+    # Busca listas (opcional)
+    seguidores = execute_sql("""
+        SELECT u.id_usuario, u.nome, u.username FROM usuario u
+        JOIN segue s ON u.id_usuario = s.seguidor_id
+        WHERE s.seguido_id = %s
+    """, (id_usuario,), fetch=True)
+
+    seguindo = execute_sql("""
+        SELECT u.id_usuario, u.nome, u.username FROM usuario u
+        JOIN segue s ON u.id_usuario = s.seguido_id
+        WHERE s.seguidor_id = %s
+    """, (id_usuario,), fetch=True)
+
     if current_user.is_authenticated and int(id_usuario) == current_user.id_usuario:
         # Usuário está vendo o próprio perfil
-        return render_template('perfil.html', usuario=current_user)
+        usuario = execute_sql("SELECT * FROM usuario WHERE id_usuario = %s", (id_usuario,), fetch_one=True)
+        pode_editar = True
     else:
         usuario = execute_sql("SELECT * FROM usuario WHERE id_usuario = %s", (id_usuario,), fetch_one=True)
-        return render_template('perfil.html', usuario=usuario)
+        pode_editar = False
+
+    # Cálculo dos dias como membro
+    data_criacao = usuario['data_criacao']  # Supondo que já é um objeto datetime
+    if isinstance(data_criacao, str):
+        data_criacao = datetime.strptime(data_criacao, '%Y-%m-%d')  # ajuste o formato se necessário
+
+    dias_membro = (datetime.now() - data_criacao).days if data_criacao else ''
+
+    return render_template(
+        'profile.html',
+        usuario=usuario,
+        qtd_posts=qtd_posts,
+        dias_membro=dias_membro,
+        qtd_seguidores=qtd_seguidores,
+        qtd_seguindo=qtd_seguindo,
+        seguidores=seguidores,
+        seguindo=seguindo,
+        pode_editar=pode_editar
+    )
 
 @views.route('/criarpost', methods=['GET', 'POST'])
 @login_required

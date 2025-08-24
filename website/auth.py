@@ -11,17 +11,24 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = Formlogin()
+    erro = None
     if form.validate_on_submit():
+        print("Formulário validado!")
+        print("Email:", form.email.data)
+        print("Senha:", form.senha.data)
         query = "SELECT * FROM usuario WHERE email = %s AND senha = %s"
         params = (form.email.data, form.senha.data)
         usuario = execute_sql(query, params, fetch_one=True)
+        print("Usuário encontrado:", usuario)
         if usuario:
             usuario_obj = Usuario(**usuario)
             login_user(usuario_obj)
             return redirect(url_for('views.perfil', id_usuario=usuario['id_usuario']))
         else:
-            return render_template('login.html', form=form, erro="Usuário ou senha inválidos.")
-    return render_template('login.html', form=form)
+            erro = "Usuário ou senha inválidos."
+    else:
+        print("Formulário não validado:", form.errors)
+    return render_template('login.html', form=form, erro=erro)
 
 @auth.route('/logout')
 def logout():

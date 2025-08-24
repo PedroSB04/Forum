@@ -21,29 +21,22 @@
                 <p class="login-subtitle">Faça login para participar das discussões</p>
             </div>
 
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        class="form-input" 
-                        placeholder="seu@email.com"
-                        required
-                    >
+            {% if erro %}
+                <div class="error-message" style="color: red; margin-bottom: 10px;">
+                    {{ erro }}
                 </div>
+            {% endif %}
 
+            <form id="loginForm" method="POST">
+                {{ form.hidden_tag() }}
                 <div class="form-group">
-                    <label for="password" class="form-label">Senha</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        class="form-input" 
-                        placeholder="Sua senha"
-                        required
-                    >
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-input", placeholder="seu@email.com", required=True) }}
                 </div>
-
+                <div class="form-group">
+                    {{ form.senha.label(class="form-label") }}
+                    {{ form.senha(class="form-input", placeholder="Sua senha", required=True) }}
+                </div>
                 <button type="submit" class="login-button" data-home-url="{{ url_for('views.home') }}">Entrar</button>
             </form>
         </div>

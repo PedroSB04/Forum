@@ -3,9 +3,9 @@ version: '3.8'
 services:
   db:
     image: postgres:17
-    container_name: dev_forum_db
+    container_name: dev_forum_container
     environment:
-      POSTGRES_DB: dev_forum
+      POSTGRES_DB: dev_forum_container
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
     ports:

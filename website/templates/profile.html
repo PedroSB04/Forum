@@ -27,12 +27,12 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{ url_for('views.profile') }}" class="menu-link active">
+                    <a href="{{ url_for('views.perfil', id_usuario=current_user.id_usuario) }}" class="menu-link active">
                         👤 Perfil
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="#" class="menu-link" onclick="logout()">
+                    <a href="{{ url_for('auth.logout') }}" class="menu-link">
                         🚪 Sair
                     </a>
                 </li>
@@ -52,18 +52,26 @@
                 </div>
                 
                 <div class="profile-info">
-                    <h1 class="profile-name" id="profileName">João Developer</h1>
-                    <p class="profile-joined">Membro desde Janeiro 2024</p>
+                    <h1 class="profile-name" id="profileName">{{ usuario.nome }}</h1>
+                    <p class="profile-username">
+                        {{ usuario.username }}
+                    </p>
+                    <p class="profile-joined">
+                        Membro desde: {{ usuario.data_criacao.strftime('%d/%m/%Y') if usuario.data_criacao }}
+                        ({{ dias_membro }} dias)
+                    </p>
                     <div class="profile-stats">
                         <div class="stat-item">
-                            <span class="stat-number">127</span>
+                            <span class="stat-number">{{ qtd_posts }}</span>
                             <span class="stat-label">Posts</span>
                         </div>
                         <div class="stat-item">
+                            <span class="stat-number">{{ qtd_seguidores }}</span>
+                            <span class="stat-label">Seguidores</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-number">892</span>
-                            <span class="stat-label">Curtidas</span>
+                            <span class="stat-number">{{ qtd_seguindo }}</span>
+                            <span class="stat-label">Seguindo</span>
                         </div>
                     </div>
                 </div>
@@ -84,7 +92,7 @@
                             type="text" 
                             id="displayName" 
                             class="form-input" 
-                            value="João Developer"
+                            value="{{ usuario.nome }}"
                             placeholder="Seu nome completo"
                         >
                     </div>
@@ -95,7 +103,7 @@
                             type="text" 
                             id="username" 
                             class="form-input" 
-                            value="joaodev"
+                            value="{{ usuario.username }}"
                             placeholder="seuusuario"
                         >
                     </div>
@@ -107,7 +115,7 @@
                         type="email" 
                         id="email" 
                         class="form-input" 
-                        value="joao@developer.com"
+                        value="{{ usuario.email }}"
                         placeholder="seu@email.com"
                     >
                 </div>
@@ -119,7 +127,7 @@
                         class="form-textarea" 
                         rows="4"
                         placeholder="Conte um pouco sobre você e suas tecnologias favoritas..."
-                    >Desenvolvedor Full Stack apaixonado por JavaScript, Python e tecnologias web modernas. Sempre em busca de novos desafios e aprendizado contínuo!</textarea>
+                    >{{ usuario.biografia }}</textarea>
                 </div>
 
                 <div class="form-actions">

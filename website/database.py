@@ -3,7 +3,7 @@ from psycopg2.extras import RealDictCursor
 
 DB_CONFIG = {
     'host': 'localhost',
-    'database': 'dev_forum',
+    'database': 'dev_forum_container',
     'user': 'postgres',
     'password': '12345',
     'port': '5432'

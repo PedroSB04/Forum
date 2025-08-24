@@ -37,3 +37,9 @@ CREATE TABLE post_categoria (
 	id_categoria INT NOT NULL REFERENCES categoria(id_categoria) ON DELETE CASCADE,
 	PRIMARY KEY (id_post, id_categoria)
 )
+
+ALTER TABLE usuario
+ADD COLUMN data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE usuario
+ADD COLUMN biografia TEXT;

@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+            // e.preventDefault(); // <-- Comentado para permitir o envio real ao backend Flask
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -186,21 +186,26 @@ document.addEventListener('DOMContentLoaded', function() {
             // Validações básicas
             if (!email || !password) {
                 alert('Por favor, preencha todos os campos');
+                e.preventDefault(); // <-- Só impede se houver erro
                 return;
             }
             
             if (!email.includes('@') || !email.includes('.')) {
                 alert('Por favor, insira um email válido');
+                e.preventDefault(); // <-- Só impede se houver erro
                 return;
             }
             
             // Simulação de login bem-sucedido
-            alert('Login realizado com sucesso! Redirecionando...');
-            
-            // Redirecionar para página inicial
-            window.location.href = '/';
+            // alert('Login realizado com sucesso! Redirecionando...');
+            // window.location.href = '/';
+            // <-- Comentado para não redirecionar via JS, deixando o backend Flask cuidar disso
         });
     }
+
+    document.querySelector('.login-button').addEventListener('click', function() {
+        document.getElementById('loginForm').submit();
+    });
 });
 
     // Adiciona feedback visual aos campos
