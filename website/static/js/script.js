@@ -135,105 +135,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // VALIDAÇÃO DO FORMULÁRIO DE CADASTRO
-    const signupForm = document.getElementById('signupForm');
-    if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const email = document.getElementById('email').value;
-            const username = document.getElementById('username').value;
-            
-            // Validações
-            if (username.length < 3) {
-                alert('O nome de usuário deve ter pelo menos 3 caracteres');
-                return;
-            }
-            
-            if (!email.includes('@') || !email.includes('.')) {
-                alert('Por favor, insira um email válido');
-                return;
-            }
-            
-            if (password.length < 8) {
-                alert('A senha deve ter pelo menos 8 caracteres');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                alert('As senhas não coincidem');
-                return;
-            }
-            
-            // Simulação de sucesso
-            alert('Conta criada com sucesso! Redirecionando para login...');
-            // Redirecionar para página de login
-            window.location.href = '/login';
-        });
-    }
-
-    // VALIDAÇÃO DO FORMULÁRIO DE LOGIN
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Validações básicas
-            if (!email || !password) {
-                alert('Por favor, preencha todos os campos');
-                return;
-            }
-            
-            if (!email.includes('@') || !email.includes('.')) {
-                alert('Por favor, insira um email válido');
-                return;
-            }
-            
-            // Simulação de login bem-sucedido
-            alert('Login realizado com sucesso! Redirecionando...');
-            
-            // Redirecionar para página inicial
-            window.location.href = '/';
-        });
-    }
-});
-
-    // Adiciona feedback visual aos campos
+    // Feedback visual básico para formulários (apenas UX)
     const inputs = document.querySelectorAll('.form-input');
     inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.style.borderColor = '#6366f1';
+        });
+        
         input.addEventListener('blur', function() {
-            if (this.value && this.checkValidity()) {
+            if (this.value.trim()) {
                 this.style.borderColor = '#10b981';
-            } else if (this.value && !this.checkValidity()) {
-                this.style.borderColor = '#ef4444';
             } else {
                 this.style.borderColor = '';
             }
         });
     });
 
-    // Validação em tempo real das senhas (apenas para formulário de cadastro)
-    const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('confirmPassword');
-
-    if (passwordInput && confirmPasswordInput) {
-        confirmPasswordInput.addEventListener('input', function() {
-            if (this.value && passwordInput.value) {
-                if (this.value === passwordInput.value) {
-                    this.style.borderColor = '#10b981';
-                } else {
-                    this.style.borderColor = '#ef4444';
-                }
-            } else {
-                this.style.borderColor = '';
-            }
+    // Animação visual para botões de submit
+    const submitButtons = document.querySelectorAll('button[type="submit"]');
+    submitButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
         });
-    }
+    });
+});
 
 // Animação de carregamento inicial
 window.addEventListener('load', function() {
@@ -244,4 +172,3 @@ window.addEventListener('load', function() {
         document.body.style.opacity = '1';
     }, 100);
 });
-
