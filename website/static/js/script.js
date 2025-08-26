@@ -209,36 +209,33 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
     // Adiciona feedback visual aos campos
+    // Feedback visual básico para formulários (apenas UX)
     const inputs = document.querySelectorAll('.form-input');
     inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.style.borderColor = '#6366f1';
+        });
+        
         input.addEventListener('blur', function() {
-            if (this.value && this.checkValidity()) {
+            if (this.value.trim()) {
                 this.style.borderColor = '#10b981';
-            } else if (this.value && !this.checkValidity()) {
-                this.style.borderColor = '#ef4444';
             } else {
                 this.style.borderColor = '';
             }
         });
     });
 
-    // Validação em tempo real das senhas (apenas para formulário de cadastro)
-    const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('confirmPassword');
-
-    if (passwordInput && confirmPasswordInput) {
-        confirmPasswordInput.addEventListener('input', function() {
-            if (this.value && passwordInput.value) {
-                if (this.value === passwordInput.value) {
-                    this.style.borderColor = '#10b981';
-                } else {
-                    this.style.borderColor = '#ef4444';
-                }
-            } else {
-                this.style.borderColor = '';
-            }
+    // Animação visual para botões de submit
+    const submitButtons = document.querySelectorAll('button[type="submit"]');
+    submitButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
         });
-    }
+    });
+});
 
 // Animação de carregamento inicial
 window.addEventListener('load', function() {
@@ -249,4 +246,3 @@ window.addEventListener('load', function() {
         document.body.style.opacity = '1';
     }, 100);
 });
-
