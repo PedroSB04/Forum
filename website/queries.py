@@ -6,6 +6,7 @@ import db
 from website.database import execute_sql
 
 
+
 #implementar na barra de busca
 def barra_de_busca(palavra):
     query = """
@@ -26,6 +27,7 @@ def barra_de_busca(palavra):
     resultados = execute_sql(query, params, fetch=True)
     return resultados
 
+#funções de interação com posts
 def like(post_id):
     query = """
         UPDATE post
