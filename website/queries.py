@@ -10,7 +10,7 @@ from website.database import execute_sql
 """
 
 #implementar na barra de busca
-def barra_de_busca(palavra, usuario_id):
+def barra_de_busca(palavra):
     query = """
         SELECT
             username,
@@ -25,9 +25,10 @@ def barra_de_busca(palavra, usuario_id):
             conteudo ILIKE %s OR
             titulo ILIKE %s
     """
-    params = (f"%{palavra}%", f"%{palavra}%", f"%{palavra}%", f"%{palavra}%")
-    resultados = execute_sql(query, params, fetch=True, usuario_id=usuario_id)
+    params = (f"%{palavra}%", f"%{palavra}%", f"%{palavra}%")
+    resultados = execute_sql(query, params, fetch=True)
     return resultados
+
 
 #funções de interação com posts
 def like(post_id):
