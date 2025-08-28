@@ -6,67 +6,11 @@ import db
 from website.database import execute_sql
 
 """
-# Query 2: Análise de Clientes e Fidelidade
-def query_analise_clientes_fidelidade():
-    # Análise de clientes por tempo de fidelidade e valor gerado
-    # Subquery para calcular o tempo de fidelidade
-    subquery_tempo_fidelidade = session.query(
-        Cliente.id_cliente,
-        Cliente.nome_cliente,
-        Cliente.data_cadastro,
-        func.current_date().label('data_atual'),
-        func.extract('year', func.age(func.current_date(), Cliente.data_cadastro)).label('anos_fidelidade'),
-        func.count(Venda.id_venda).label('total_compras'),
-        func.sum(Venda.valor_total).label('valor_total_gasto')
-    ).outerjoin(Venda, Cliente.id_cliente == Venda.id_cliente)\
-     .group_by(Cliente.id_cliente, Cliente.nome_cliente, Cliente.data_cadastro)\
-     .subquery()
-    
-    # Query principal com segmentação de clientes
-    resultados = session.query(
-        subquery_tempo_fidelidade.c.id_cliente,
-        subquery_tempo_fidelidade.c.nome_cliente,
-        subquery_tempo_fidelidade.c.data_cadastro,
-        subquery_tempo_fidelidade.c.anos_fidelidade,
-        subquery_tempo_fidelidade.c.total_compras,
-        subquery_tempo_fidelidade.c.valor_total_gasto,
-        case([
-            (subquery_tempo_fidelidade.c.anos_fidelidade >= 5, "Cliente Ouro (5+ anos)"),
-            (subquery_tempo_fidelidade.c.anos_fidelidade >= 3, "Cliente Prata (3-4 anos)"),
-            (subquery_tempo_fidelidade.c.anos_fidelidade >= 1, "Cliente Bronze (1-2 anos)"),
-        ], else_="Cliente Novo (<1 ano)").label('segmento_fidelidade'),
-        case([
-            (subquery_tempo_fidelidade.c.valor_total_gasto >= 10000, "VIP (R$10k+)"),
-            (subquery_tempo_fidelidade.c.valor_total_gasto >= 5000, "Premium (R$5k-10k)"),
-            (subquery_tempo_fidelidade.c.valor_total_gasto >= 1000, "Standard (R$1k-5k)"),
-        ], else_="Basic (<R$1k)").label('segmento_valor'),
-        func.avg(subquery_tempo_fidelidade.c.valor_total_gasto).over().label('media_geral_gasto'),
-        func.percent_rank().over(order_by=subquery_tempo_fidelidade.c.valor_total_gasto).label('percentil_gasto')
-    ).all()
-    
-    # Processamento dos resultados
-    df = pd.DataFrame([{
-        'id_cliente': r.id_cliente,
-        'nome_cliente': r.nome_cliente,
-        'data_cadastro': r.data_cadastro,
-        'anos_fidelidade': r.anos_fidelidade,
-        'total_compras': r.total_compras,
-        'valor_total_gasto': float(r.valor_total_gasto) if r.valor_total_gasto else 0,
-        'segmento_fidelidade': r.segmento_fidelidade,
-        'segmento_valor': r.segmento_valor,
-        'media_geral_gasto': float(r.media_geral_gasto) if r.media_geral_gasto else 0,
-        'percentil_gasto': float(r.percentil_gasto) if r.percentil_gasto else 0
-    } for r in resultados])
-    
-    # Análises adicionais
-    df['dias_ultima_compra'] = (datetime.now() - pd.to_datetime(df['data_cadastro'])).dt.days
-    df['valor_medio_compra'] = df['valor_total_gasto'] / df['total_compras'].replace(0, 1)
-    
-    return df
+
 """
 
 #implementar na barra de busca
-def barra_de_busca(palavra):
+def barra_de_busca(palavra, usuario_id):
     query = """
         SELECT
             username,
@@ -81,8 +25,8 @@ def barra_de_busca(palavra):
             conteudo ILIKE %s OR
             titulo ILIKE %s
     """
-    params = (f"%{palavra}%", f"%{palavra}%", f"%{palavra}%")
-    resultados = execute_sql(query, params, fetch=True)
+    params = (f"%{palavra}%", f"%{palavra}%", f"%{palavra}%", f"%{palavra}%")
+    resultados = execute_sql(query, params, fetch=True, usuario_id=usuario_id)
     return resultados
 
 #funções de interação com posts
