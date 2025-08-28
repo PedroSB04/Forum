@@ -6,74 +6,61 @@ import db
 from website.database import execute_sql
 
 """
-# Query 1: Análise de Vendas por Categoria e Período
-def query_vendas_por_categoria_periodo():
-    # Configuração da sessão
-    session = db.Session()
-
-    # Subquery para vendas por categoria
-    subquery_vendas = session.query(
-        Categoria.nome_categoria,
-        func.date_trunc('month', Venda.data_venda).label('mes'),
-        func.sum(Venda.valor_total).label('total_vendas'),
-        func.count(Venda.id_venda).label('quantidade_vendas'),
-        func.avg(Venda.valor_total).label('valor_medio_venda'),
-        func.sum(Venda.quantidade).label('total_itens_vendidos'),
-        func.max(Venda.valor_total).label('maior_venda'),
-        func.min(Venda.valor_total).label('menor_venda')
-    ).join(Produto, Venda.id_produto == Produto.id_produto)\
-     .join(Categoria, Produto.id_categoria == Categoria.id_categoria)\
-     .filter(Venda.data_venda.between('2023-01-01', '2023-12-31'))\
-     .group_by(Categoria.nome_categoria, func.date_trunc('month', Venda.data_venda))\
+# Query 2: Análise de Clientes e Fidelidade
+def query_analise_clientes_fidelidade():
+    # Análise de clientes por tempo de fidelidade e valor gerado
+    # Subquery para calcular o tempo de fidelidade
+    subquery_tempo_fidelidade = session.query(
+        Cliente.id_cliente,
+        Cliente.nome_cliente,
+        Cliente.data_cadastro,
+        func.current_date().label('data_atual'),
+        func.extract('year', func.age(func.current_date(), Cliente.data_cadastro)).label('anos_fidelidade'),
+        func.count(Venda.id_venda).label('total_compras'),
+        func.sum(Venda.valor_total).label('valor_total_gasto')
+    ).outerjoin(Venda, Cliente.id_cliente == Venda.id_cliente)\
+     .group_by(Cliente.id_cliente, Cliente.nome_cliente, Cliente.data_cadastro)\
      .subquery()
     
-    # Query principal com cálculos adicionais
+    # Query principal com segmentação de clientes
     resultados = session.query(
-        subquery_vendas.c.nome_categoria,
-        subquery_vendas.c.mes,
-        subquery_vendas.c.total_vendas,
-        subquery_vendas.c.quantidade_vendas,
-        subquery_vendas.c.valor_medio_venda,
-        subquery_vendas.c.total_itens_vendidos,
-        subquery_vendas.c.maior_venda,
-        subquery_vendas.c.menor_venda,
-        func.percentile_cont(0.5).within_group(
-            subquery_vendas.c.total_vendas
-        ).label('mediana_vendas'),
-        func.stddev(subquery_vendas.c.total_vendas).label('desvio_padrao_vendas'),
-        func.var_samp(subquery_vendas.c.total_vendas).label('variancia_vendas'),
-        func.rank().over(
-            partition_by=subquery_vendas.c.mes,
-            order_by=subquery_vendas.c.total_vendas.desc()
-        ).label('ranking_vendas'),
-        func.rank().over(
-            partition_by=subquery_vendas.c.mes,
-            order_by=subquery_vendas.c.quantidade_vendas.desc()
-        ).label('ranking_quantidade')
+        subquery_tempo_fidelidade.c.id_cliente,
+        subquery_tempo_fidelidade.c.nome_cliente,
+        subquery_tempo_fidelidade.c.data_cadastro,
+        subquery_tempo_fidelidade.c.anos_fidelidade,
+        subquery_tempo_fidelidade.c.total_compras,
+        subquery_tempo_fidelidade.c.valor_total_gasto,
+        case([
+            (subquery_tempo_fidelidade.c.anos_fidelidade >= 5, "Cliente Ouro (5+ anos)"),
+            (subquery_tempo_fidelidade.c.anos_fidelidade >= 3, "Cliente Prata (3-4 anos)"),
+            (subquery_tempo_fidelidade.c.anos_fidelidade >= 1, "Cliente Bronze (1-2 anos)"),
+        ], else_="Cliente Novo (<1 ano)").label('segmento_fidelidade'),
+        case([
+            (subquery_tempo_fidelidade.c.valor_total_gasto >= 10000, "VIP (R$10k+)"),
+            (subquery_tempo_fidelidade.c.valor_total_gasto >= 5000, "Premium (R$5k-10k)"),
+            (subquery_tempo_fidelidade.c.valor_total_gasto >= 1000, "Standard (R$1k-5k)"),
+        ], else_="Basic (<R$1k)").label('segmento_valor'),
+        func.avg(subquery_tempo_fidelidade.c.valor_total_gasto).over().label('media_geral_gasto'),
+        func.percent_rank().over(order_by=subquery_tempo_fidelidade.c.valor_total_gasto).label('percentil_gasto')
     ).all()
     
-    # Processamento adicional dos resultados
+    # Processamento dos resultados
     df = pd.DataFrame([{
-        'categoria': r.nome_categoria,
-        'mes': r.mes,
-        'total_vendas': float(r.total_vendas) if r.total_vendas else 0,
-        'quantidade_vendas': r.quantidade_vendas,
-        'valor_medio_venda': float(r.valor_medio_venda) if r.valor_medio_venda else 0,
-        'total_itens': r.total_itens_vendidos,
-        'maior_venda': float(r.maior_venda) if r.maior_venda else 0,
-        'menor_venda': float(r.menor_venda) if r.menor_venda else 0,
-        'mediana': float(r.mediana_vendas) if r.mediana_vendas else 0,
-        'desvio_padrao': float(r.desvio_padrao_vendas) if r.desvio_padrao_vendas else 0,
-        'variancia': float(r.variancia_vendas) if r.variancia_vendas else 0,
-        'ranking_vendas': r.ranking_vendas,
-        'ranking_quantidade': r.ranking_quantidade
+        'id_cliente': r.id_cliente,
+        'nome_cliente': r.nome_cliente,
+        'data_cadastro': r.data_cadastro,
+        'anos_fidelidade': r.anos_fidelidade,
+        'total_compras': r.total_compras,
+        'valor_total_gasto': float(r.valor_total_gasto) if r.valor_total_gasto else 0,
+        'segmento_fidelidade': r.segmento_fidelidade,
+        'segmento_valor': r.segmento_valor,
+        'media_geral_gasto': float(r.media_geral_gasto) if r.media_geral_gasto else 0,
+        'percentil_gasto': float(r.percentil_gasto) if r.percentil_gasto else 0
     } for r in resultados])
     
-    # Cálculos adicionais com pandas
-    df['percentual_crescimento'] = df.groupby('categoria')['total_vendas'].pct_change() * 100
-    df['media_movel'] = df.groupby('categoria')['total_vendas'].transform(
-        lambda x: x.rolling(window=3, min_periods=1).mean()
-    )
+    # Análises adicionais
+    df['dias_ultima_compra'] = (datetime.now() - pd.to_datetime(df['data_cadastro'])).dt.days
+    df['valor_medio_compra'] = df['valor_total_gasto'] / df['total_compras'].replace(0, 1)
     
     return df
 """
