@@ -59,7 +59,18 @@
         </div>
 
         <div class="discussions-section">
-            <h2 class="discussions-header">Discussões Recentes</h2>
+            <div class="discussions-header-container">
+                <h2 class="discussions-header">Discussões Recentes</h2>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('views.criar_post') }}" class="create-topic-button">
+                        ✏️ Criar Tópico
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="create-topic-button">
+                        ✏️ Criar Tópico
+                    </a>
+                {% endif %}
+            </div>
             <div class="empty-state">
                 <div class="empty-icon"></div>
                 <div class="empty-title">Nenhum tópico encontrado</div>

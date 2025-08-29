@@ -23,7 +23,14 @@
                 <p class="signup-subtitle">Crie sua conta e comece a participar das discussões</p>
             </div>
 
-            <form id="signupForm">
+            <form id="signupForm" method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="form-group">
+                    {{ form.nome.label(class="form-label") }}
+                    {{ form.nome(class="form-input", placeholder="Seu nome completo", required=True) }}
+                </div>
+
                 <div class="form-group">
                     {{ form.username.label(class="form-label") }}
                     {{ form.username(class="form-input", placeholder="seuusuario", required=True) }}

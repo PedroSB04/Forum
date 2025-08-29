@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Novo Tópico - DevForum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="create-topic-container">
+            <div class="create-topic-header">
+                <div class="header-icon">+</div>
+                <h1 class="header-title">Criar Novo Tópico</h1>
+            </div>
+
+            <form class="create-form" method="POST" action="{{ url_for('views.criar_topico') }}">
+                <div class="form-group">
+                    <label for="titulo" class="form-label">Título do Tópico</label>
+                    <input 
+                        type="text" 
+                        id="titulo" 
+                        name="titulo" 
+                        class="form-input" 
+                        placeholder="Digite um título descritivo para seu tópico"
+                        required
+                        minlength="5"
+                    >
+                    <div class="form-hint">Seja específico e descritivo (mínimo 5 caracteres)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria" class="form-label">Categoria</label>
+                    <select id="categoria" name="categoria" class="form-select" required>
+                        <option value="">Selecione uma categoria</option>
+                        <option value="frontend">Frontend</option>
+                        <option value="backend">Backend</option>
+                        <option value="mobile">Mobile</option>
+                        <option value="devops">DevOps</option>
+                        <option value="database">Banco de Dados</option>
+                        <option value="ai-ml">IA & Machine Learning</option>
+                        <option value="web">Desenvolvimento Web</option>
+                        <option value="tools">Ferramentas</option>
+                        <option value="career">Carreira</option>
+                        <option value="general">Geral</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="conteudo" class="form-label">Conteúdo</label>
+                    <textarea 
+                        id="conteudo" 
+                        name="conteudo" 
+                        class="form-textarea" 
+                        placeholder="Compartilhe seus pensamentos, perguntas ou experiências..."
+                        required
+                        minlength="10"
+                    ></textarea>
+                    <div class="form-hint">Forneça informações detalhadas para ajudar a comunidade a entender seu tópico (mínimo 10 caracteres)</div>
+                </div>
+
+                <div class="button-group">
+                    <a href="{{ url_for('views.home') }}" class="btn btn-cancel">
+                        ← Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        ⏰ Criar Tópico
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
