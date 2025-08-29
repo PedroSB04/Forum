@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import login_user, logout_user
 from website.database import execute_sql
 from website.forms import Formlogin, Formsignup
@@ -38,9 +38,15 @@ def logout():
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = Formsignup()
+    print("Método:", request.method)
+    print("Dados recebidos:", request.form)
     if form.validate_on_submit():
+        print("Formulário validado!")
         query = "INSERT INTO usuario (nome, username, email, senha) VALUES (%s, %s, %s, %s)"
         params = (form.nome.data, form.username.data, form.email.data, form.senha.data)
         execute_sql(query, params)
+        print("Usuário inserido!")
         return redirect(url_for('views.home'))
+    else:
+        print("Formulário não validado:", form.errors)
     return render_template('signup.html', form=form)
