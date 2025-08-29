@@ -85,22 +85,36 @@ function joinCommunity() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Funcionalidade de busca
+    // Busca instantânea apenas no frontend (filtro local)
     const searchInput = document.getElementById('searchInput');
-    
-    if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
-            const searchTerm = e.target.value;
-            
-            if (searchTerm.length > 0) {
-                const emptyState = document.querySelector('.empty-state');
-                if (emptyState) {
-                    emptyState.style.opacity = '0.5';
-                    
-                    setTimeout(() => {
-                        emptyState.style.opacity = '1';
-                    }, 500);
+    const postsList = document.querySelector('.posts-list');
+    if (searchInput && postsList) {
+        searchInput.addEventListener('input', function() {
+            const termo = searchInput.value.trim().toLowerCase();
+            const postCards = postsList.querySelectorAll('.post-card');
+            let algumVisivel = false;
+            postCards.forEach(card => {
+                const titulo = card.querySelector('.post-title').innerText.toLowerCase();
+                const conteudo = card.querySelector('.post-preview').innerText.toLowerCase();
+                const usuario = card.querySelector('.author-name').innerText.toLowerCase();
+                if (titulo.includes(termo) || conteudo.includes(termo) || usuario.includes(termo)) {
+                    card.style.display = '';
+                    algumVisivel = true;
+                } else {
+                    card.style.display = 'none';
                 }
+            });
+            // Mensagem caso nenhum post visível
+            let noMsg = postsList.querySelector('.no-posts-message');
+            if (!algumVisivel) {
+                if (!noMsg) {
+                    noMsg = document.createElement('div');
+                    noMsg.className = 'no-posts-message';
+                    noMsg.innerHTML = '<p>Nenhum post encontrado.</p>';
+                    postsList.appendChild(noMsg);
+                }
+            } else {
+                if (noMsg) noMsg.remove();
             }
         });
     }
@@ -172,3 +186,15 @@ window.addEventListener('load', function() {
         document.body.style.opacity = '1';
     }, 100);
 });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteForms = document.querySelectorAll('.delete-form');
+            deleteForms.forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    const confirmed = confirm('Você tem certeza que deseja excluir esta publicação? A ação não pode ser desfeita.');
+                    if (!confirmed) {
+                        event.preventDefault(); // Cancela o envio do formulário se o usuário clicar em "Cancelar"
+                    }
+                });
+            });
+        });

@@ -639,6 +639,8 @@ body {
     resize: vertical;
     min-height: 150px;
     transition: all 0.3s ease;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
 }
 
 .form-textarea::placeholder {
@@ -909,22 +911,22 @@ body {
 }
 
 .avatar-circle {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+    background: #6366f1; 
 }
 
-.avatar-circle:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(99, 102, 241, 0.4);
+.avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
 }
 
 .avatar-initials {
@@ -1318,3 +1320,254 @@ body {
         font-size: 20px;
     }
 }
+
+/* Estilização para os filtros de Categoria e Ordem */
+.filter-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Adiciona uma seta personalizada */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 15px center;
+    background-repeat: no-repeat;
+    background-size: 1.25em;
+
+    /* Estilos base para combinar com os outros botões */
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 15px 45px 15px 25px; 
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-family: inherit; 
+}
+
+.filter-select:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Estiliza as opções quando o menu dropdown está aberto */
+.filter-select option {
+    background: #16213e;
+    color: #ffffff;
+}
+
+/* Estilos para os cards de posts */
+.posts-list {
+    margin-top: 20px;
+}
+
+.post-card {
+    background: #fff; /* ou sua cor de fundo */
+    border-radius: 8px;
+    padding: 20px; /* Garante espaço interno suficiente */
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+    overflow: hidden; /* Garante que nada saia do card */
+}
+
+.post-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.post-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-avatar-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.author-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.post-time {
+    color: #666;
+    font-size: 14px;
+}
+
+.post-content p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.post-title {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+}
+
+.post-title a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.post-title a:hover {
+    color: #667eea;
+}
+
+.post-preview {
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.post-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-item {
+    color: #666;
+    font-size: 14px;
+}
+
+.view-discussion-btn {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.view-discussion-btn:hover {
+    color: #764ba2;
+}
+
+.no-posts-message {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.no-posts-message a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.no-posts-message a:hover {
+    text-decoration: underline;
+}
+
+        .original-post-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            margin-bottom: 40px;
+        }
+        .reply-card {
+            background-color: rgba(255, 255, 255, 0.04);
+            margin-left: 20px; /* Leve indentação para respostas */
+        }
+        .reply-form-container {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+.post-main-content {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+    white-space: pre-wrap; /* Preserva quebras de linha e espaços do autor */
+    font-size: 16px;
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+}
+
+        .activity-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 30px;
+            backdrop-filter: blur(10px);
+        }
+        .activity-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .activity-content a {
+            color: #a7a9ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .activity-content a:hover {
+            text-decoration: underline;
+        }
+        .activity-info {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 8px;
+        }
+        /* Para evitar que texto longo saia da caixa */
+        .activity-content p {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .delete-btn {
+            background-color: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #ff8a8a;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .delete-btn:hover {
+            background-color: rgba(239, 68, 68, 0.4);
+            color: #fff;
+        }

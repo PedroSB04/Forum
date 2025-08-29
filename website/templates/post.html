@@ -26,22 +26,17 @@
                     {% endif %}
                 </div>
 
-                <!-- Campo de categoria mantido, mas não faz parte do FormpostPai -->
                 <div class="form-group">
                     <label for="categoria" class="form-label">Categoria</label>
                     <select id="categoria" name="categoria" class="form-select" required>
                         <option value="">Selecione uma categoria</option>
-                        <option value="frontend">Frontend</option>
-                        <option value="backend">Backend</option>
-                        <option value="mobile">Mobile</option>
-                        <option value="devops">DevOps</option>
-                        <option value="database">Banco de Dados</option>
-                        <option value="ai-ml">IA & Machine Learning</option>
-                        <option value="web">Desenvolvimento Web</option>
-                        <option value="tools">Ferramentas</option>
-                        <option value="career">Carreira</option>
-                        <option value="general">Geral</option>
+                        {% for cat in categorias %}
+                            <option value="{{ cat.id_categoria }}">{{ cat.nome }}</option>
+                        {% endfor %}
                     </select>
+                    {% if mensagem_categoria %}
+                        <div class="form-error" style="margin-top:6px;">{{ mensagem_categoria }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">

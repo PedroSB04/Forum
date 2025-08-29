@@ -43,3 +43,8 @@ ADD COLUMN data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 ALTER TABLE usuario
 ADD COLUMN biografia TEXT;
+
+ALTER TABLE post ALTER COLUMN titulo DROP NOT NULL;
+
+ALTER TABLE post
+ADD COLUMN id_categoria INT REFERENCES categoria(id_categoria);

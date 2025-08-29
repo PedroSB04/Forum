@@ -3,142 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevForum - Perfil</title>
+    <title>DevForum - Perfil de {{ usuario.username }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
-    
+
     <div class="container">
         <header class="header">
             <div class="logo">DevForum</div>
             <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
         </header>
 
         <nav class="mobile-menu" id="mobileMenu">
             <ul class="menu-list">
-                <li class="menu-item">
-                    <a href="{{ url_for('views.home') }}" class="menu-link">
-                        🏠 Início
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{ url_for('views.perfil', id_usuario=current_user.id_usuario) }}" class="menu-link active">
-                        👤 Perfil
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{ url_for('auth.logout') }}" class="menu-link">
-                        🚪 Sair
-                    </a>
-                </li>
+                <li class="menu-item"><a href="{{ url_for('views.home') }}" class="menu-link">🏠 Início</a></li>
+                <li class="menu-item"><a href="{{ url_for('views.perfil', id_usuario=current_user.id_usuario) }}" class="menu-link active">👤 Perfil</a></li>
+                <li class="menu-item"><a href="{{ url_for('auth.logout') }}" class="menu-link">🚪 Sair</a></li>
             </ul>
         </nav>
 
-        <!-- Seção de Informações do Perfil -->
         <div class="profile-section">
             <div class="profile-header">
                 <div class="profile-avatar">
-                    <div class="avatar-circle" id="avatarCircle">
-                        <span class="avatar-initials" id="avatarInitials">JD</span>
-                    </div>
-                    <button class="avatar-upload-btn" onclick="changeAvatar()">
-                        📷 Alterar Foto
-                    </button>
+                    <form id="avatarForm" action="{{ url_for('views.upload_avatar') }}" method="post" enctype="multipart/form-data">
+                        <label for="avatarInput" style="cursor:pointer;">
+                            <div class="avatar-circle" id="avatarCircle">
+                                {% if usuario.foto_perfil %}
+                                    <img src="{{ usuario.foto_perfil }}" alt="Avatar" style="width:100px;height:100px;border-radius:50%;object-fit:cover;">
+                                {% else %}
+                                    <span class="avatar-initials">{{ usuario.username[0]|upper }}</span>
+                                {% endif %}
+                            </div>
+                        </label>
+                        {% if pode_editar %}
+                        <input type="file" id="avatarInput" name="avatar" accept="image/*" style="display:none;" onchange="document.getElementById('avatarForm').submit();">
+                        <button type="button" class="avatar-upload-btn" onclick="document.getElementById('avatarInput').click();">
+                            📷 Alterar Foto
+                        </button>
+                        {% endif %}
+                    </form>
                 </div>
-                
                 <div class="profile-info">
-                    <h1 class="profile-name" id="profileName">{{ usuario.nome }}</h1>
-                    <p class="profile-username">
-                        {{ usuario.username }}
-                    </p>
+                    <h1 class="profile-name">{{ usuario.nome }}</h1>
+                    <p class="profile-username">{{ usuario.username }}</p>
                     <p class="profile-joined">
-                        Membro desde: {{ usuario.data_criacao.strftime('%d/%m/%Y') if usuario.data_criacao }}
-                        ({{ dias_membro }} dias)
+                        Membro há {{ dias_membro }} dias
                     </p>
                     <div class="profile-stats">
                         <div class="stat-item">
                             <span class="stat-number">{{ qtd_posts }}</span>
-                            <span class="stat-label">Posts</span>
+                            <span class="stat-label">Tópicos Criados</span>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-number">{{ qtd_seguidores }}</span>
-                            <span class="stat-label">Seguidores</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">{{ qtd_seguindo }}</span>
-                            <span class="stat-label">Seguindo</span>
+                         <div class="stat-item">
+                            <span class="stat-number">{{ atividades|length }}</span>
+                            <span class="stat-label">Atividades</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Seção de Edição de Perfil -->
+        {% if pode_editar %}
         <div class="edit-profile-section">
-            <div class="section-header">
-                <h2 class="section-title">✏️ Editar Perfil</h2>
-            </div>
-            
-            <form id="profileForm" class="profile-form">
+            <div class="section-header"><h2 class="section-title">✏️ Editar Perfil</h2></div>
+            <form id="profileForm" class="profile-form" method="POST" action="{{ url_for('views.editar_perfil') }}">
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label" for="displayName">Nome de Exibição</label>
-                        <input 
-                            type="text" 
-                            id="displayName" 
-                            class="form-input" 
-                            value="{{ usuario.nome }}"
-                            placeholder="Seu nome completo"
-                        >
+                        <label class="form-label" for="displayName">Nome</label>
+                        <input type="text" id="displayName" name="nome" class="form-input" value="{{ usuario.nome }}">
                     </div>
-                    
                     <div class="form-group">
-                        <label class="form-label" for="username">Nome de Usuário</label>
-                        <input 
-                            type="text" 
-                            id="username" 
-                            class="form-input" 
-                            value="{{ usuario.username }}"
-                            placeholder="seuusuario"
-                        >
+                        <label class="form-label" for="username">Username</label>
+                        <input type="text" id="username" name="username" class="form-input" value="{{ usuario.username }}">
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="form-label" for="email">Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        class="form-input" 
-                        value="{{ usuario.email }}"
-                        placeholder="seu@email.com"
-                    >
+                    <input type="email" id="email" name="email" class="form-input" value="{{ usuario.email }}">
                 </div>
-
                 <div class="form-group">
                     <label class="form-label" for="bio">Biografia</label>
-                    <textarea 
-                        id="bio" 
-                        class="form-textarea" 
-                        rows="4"
-                        placeholder="Conte um pouco sobre você e suas tecnologias favoritas..."
-                    >{{ usuario.biografia }}</textarea>
+                    <textarea id="bio" name="biografia" class="form-textarea" rows="4">{{ usuario.biografia or '' }}</textarea>
                 </div>
-
                 <div class="form-actions">
-                    <button type="submit" class="save-button">
-                        💾 Salvar Alterações
-                    </button>
-                    <button type="button" class="cancel-button" onclick="resetForm()">
-                        ❌ Cancelar
-                    </button>
+                    <button type="submit" class="save-button">💾 Salvar Alterações</button>
                 </div>
             </form>
+        </div>
+        {% endif %}
+
+        <div class="activity-section">
+            <h2 class="section-title" style="margin-bottom: 20px;">Últimas Atividades</h2>
+            {% if atividades %}
+                {% for item in atividades %}
+                <div class="activity-card">
+                    <div class="activity-content">
+                        {% if item.titulo %}
+                            <p><strong>Criou o tópico:</strong> <a href="{{ url_for('views.discussao', post_raiz_id=item.id_post) }}">{{ item.titulo }}</a></p>
+                        {% else %}
+                            <p><strong>Respondeu em:</strong> <a href="{{ url_for('views.discussao', post_raiz_id=item.post_raiz_id) }}">{{ item.titulo_pai or 'um tópico' }}</a></p>
+                            <p style="color: rgba(255,255,255,0.8); margin-top: 5px;"><em>"{{ item.conteudo|truncate(200) }}"</em></p>
+                        {% endif %}
+                        <div class="activity-info">
+                            {{ item.data_post.strftime('%d/%m/%Y às %H:%M') }}
+                        </div>
+                    </div>
+                    {% if pode_editar %}
+                    <form method="POST" action="{{ url_for('views.deletar_post', id_post=item.id_post) }}" class="delete-form">
+                        <button type="submit" class="delete-btn">Excluir</button>
+                    </form>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="text-align:center; color: rgba(255,255,255,0.7);">Nenhuma atividade para mostrar.</p>
+            {% endif %}
         </div>
     </div>
 

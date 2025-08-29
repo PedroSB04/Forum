@@ -1,6 +1,6 @@
 #formularios do site
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 from .database import execute_sql
 
@@ -25,9 +25,10 @@ class Formsignup(FlaskForm):
         
 class FormpostPai(FlaskForm):
     titulo = StringField("Título", validators=[DataRequired(), Length(min=2, max=100)])
-    conteudo = StringField("Conteúdo", validators=[DataRequired()])
+    conteudo = TextAreaField("Conteúdo", validators=[DataRequired()])
     botao_de_confirmacao = SubmitField("Criar Post")    
 
 class FormpostFilho(FlaskForm):
-    conteudo = StringField("Conteúdo", validators=[DataRequired()])
-    botao_de_confirmacao = SubmitField("Comentar")
+    conteudo = TextAreaField('Sua Resposta', validators=[DataRequired(), Length(min=2)])
+    post_raiz_id = HiddenField() # Campo oculto para saber a qual post estamos respondendo
+    botao_de_confirmacao = SubmitField('Enviar Resposta')
