@@ -1,8 +1,4 @@
-from flask import current_app, request
 from flask_login import current_user
-from forms import Formlogin, Formsignup
-import db
-
 from website.database import execute_sql
 
 

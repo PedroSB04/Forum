@@ -45,3 +45,11 @@ def execute_sql(query, params=None, fetch=False, fetch_one=False):
     finally:
         cursor.close()
         conn.close()
+
+# Teste rápido de conexão
+if __name__ == "__main__":
+    try:
+        resultado = execute_sql("SELECT 1", fetch_one=True)
+        print("Conexão bem-sucedida! Resultado:", resultado)
+    except Exception as e:
+        print("Falha na conexão com o banco de dados:", e)
