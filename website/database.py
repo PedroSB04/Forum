@@ -5,8 +5,8 @@ DB_CONFIG = {
     'host': 'localhost',
     'database': 'dev_forum_container',
     'user': 'postgres',
-    'password': '12345',
-    'port': '5432'
+    'password': 'pedro951',
+    'port': '5433'
 }
 
 def get_db_connection():

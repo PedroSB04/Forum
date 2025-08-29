@@ -77,7 +77,7 @@ def criar_post():
         query = "INSERT INTO post (titulo, conteudo, id_usuario) VALUES (%s, %s, %s)"
         params = (form.titulo.data, form.conteudo.data, current_user.id_usuario)
         execute_sql(query, params)
-    return render_template('posts.html', form=form)
+    return render_template('post.html', form=form)
 
 @views.route('/discussao/<int:post_raiz_id>', methods=['GET', 'POST'])
 def discussao(post_raiz_id):

@@ -14,21 +14,19 @@
                 <h1 class="header-title">Criar Novo Tópico</h1>
             </div>
 
-            <form class="create-form" method="POST" action="{{ url_for('views.criar_topico') }}">
+            <form class="create-form" method="POST" action="{{ url_for('views.criar_post') }}">
+                {{ form.hidden_tag() }}
                 <div class="form-group">
                     <label for="titulo" class="form-label">Título do Tópico</label>
-                    <input 
-                        type="text" 
-                        id="titulo" 
-                        name="titulo" 
-                        class="form-input" 
-                        placeholder="Digite um título descritivo para seu tópico"
-                        required
-                        minlength="5"
-                    >
-                    <div class="form-hint">Seja específico e descritivo (mínimo 5 caracteres)</div>
+                    {{ form.titulo(class="form-input", id="titulo", placeholder="Digite um título descritivo para seu tópico", minlength="5", required=True) }}
+                    {% if form.titulo.errors %}
+                        <div class="form-error">{{ form.titulo.errors[0] }}</div>
+                    {% else %}
+                        <div class="form-hint">Seja específico e descritivo (mínimo 5 caracteres)</div>
+                    {% endif %}
                 </div>
 
+                <!-- Campo de categoria mantido, mas não faz parte do FormpostPai -->
                 <div class="form-group">
                     <label for="categoria" class="form-label">Categoria</label>
                     <select id="categoria" name="categoria" class="form-select" required>
@@ -48,24 +46,19 @@
 
                 <div class="form-group">
                     <label for="conteudo" class="form-label">Conteúdo</label>
-                    <textarea 
-                        id="conteudo" 
-                        name="conteudo" 
-                        class="form-textarea" 
-                        placeholder="Compartilhe seus pensamentos, perguntas ou experiências..."
-                        required
-                        minlength="10"
-                    ></textarea>
-                    <div class="form-hint">Forneça informações detalhadas para ajudar a comunidade a entender seu tópico (mínimo 10 caracteres)</div>
+                    {{ form.conteudo(class="form-textarea", id="conteudo", placeholder="Compartilhe seus pensamentos, perguntas ou experiências...", minlength="10", required=True) }}
+                    {% if form.conteudo.errors %}
+                        <div class="form-error">{{ form.conteudo.errors[0] }}</div>
+                    {% else %}
+                        <div class="form-hint">Forneça informações detalhadas para ajudar a comunidade a entender seu tópico (mínimo 10 caracteres)</div>
+                    {% endif %}
                 </div>
 
                 <div class="button-group">
                     <a href="{{ url_for('views.home') }}" class="btn btn-cancel">
                         ← Cancelar
                     </a>
-                    <button type="submit" class="btn btn-primary">
-                        ⏰ Criar Tópico
-                    </button>
+                    {{ form.botao_de_confirmacao(class="btn btn-primary") }}
                 </div>
             </form>
         </div>

@@ -183,6 +183,13 @@ body {
     transform: translateX(3px) scale(0.98);
 }
 
+/* Link ativo no menu */
+.menu-link.active {
+    background: rgba(99, 102, 241, 0.2);
+    border-left-color: #6366f1;
+    color: #ffffff;
+}
+
 /* Overlay para fechar o menu */
 .menu-overlay {
     position: fixed;
@@ -290,6 +297,32 @@ body {
     content: "💬";
     margin-right: 12px;
     font-size: 22px;
+}
+
+.discussions-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.create-topic-button {
+    background: linear-gradient(135deg, #8b5cf6, #8b5cf6);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.create-topic-button:hover {
+    background: linear-gradient(135deg, #8b5cf6, #8b5cf6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
 /* Estado vazio */
@@ -472,28 +505,87 @@ body {
     font-weight: 400;
 }
 
+/* ========== ESTILOS ESPECÍFICOS PARA CRIAR TÓPICO ========== */
+
+/* Container de criação de tópico */
+.create-topic-container {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 800px;
+    margin: 40px auto;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    animation: fadeIn 0.6s ease forwards;
+    position: relative;
+}
+
+/* Header da página de criar tópico */
+.create-topic-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 35px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.create-topic-header .header-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    font-family: inherit;
+}
+
+.header-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+}
+
 /* Formulário */
+.create-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
 .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     margin-bottom: 20px;
 }
 
 .form-label {
     display: block;
     color: #ffffff;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 600;
     margin-bottom: 6px;
 }
 
 .form-input {
     width: 100%;
-    padding: 10px 12px;
+    padding: 14px 18px;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
+    border-radius: 10px;
     color: #ffffff;
-    font-size: 14px;
-    transition: all 0.2s ease;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    font-family: inherit;
 }
 
 .form-input::placeholder {
@@ -504,27 +596,125 @@ body {
     outline: none;
     border-color: #6366f1;
     background: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    transform: translateY(-1px);
 }
 
-.signup-button {
+.form-select {
     width: 100%;
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    border: none;
-    border-radius: 6px;
-    color: white;
-    font-size: 15px;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    transform: translateY(-1px);
+}
+
+.form-select option {
+    background: #16213e;
+    color: #ffffff;
+    padding: 10px;
+}
+
+.form-textarea {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 150px;
+    transition: all 0.3s ease;
+}
+
+.form-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-textarea:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    transform: translateY(-1px);
+}
+
+.form-hint {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-hint::before {
+    content: "💡";
+    font-size: 16px;
+}
+
+/* Grupo de botões */
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn {
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 8px;
-    margin-bottom: 20px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     position: relative;
     overflow: hidden;
+    border: none;
+    font-family: inherit;
 }
 
-.signup-button::before {
+.btn-cancel {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    flex: 0 0 auto;
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #ffffff;
+    flex: 1;
+    position: relative;
+}
+
+.btn-primary::before {
     content: '';
     position: absolute;
     top: 0;
@@ -535,20 +725,83 @@ body {
     transition: left 0.5s;
 }
 
-.signup-button:hover::before {
+.btn-primary:hover::before {
     left: 100%;
 }
 
-.signup-button:hover {
+.btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
 }
 
-.signup-button:active {
+.btn-primary:active {
     transform: translateY(0);
 }
 
-.login-button {
+/* Estados de validação */
+.form-input:invalid {
+    border-color: rgba(239, 68, 68, 0.5);
+}
+
+.form-input:valid {
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.form-select:invalid {
+    border-color: rgba(239, 68, 68, 0.5);
+}
+
+.form-select:valid {
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.form-textarea:invalid {
+    border-color: rgba(239, 68, 68, 0.5);
+}
+
+.form-textarea:valid {
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+/* Efeitos especiais */
+.create-topic-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #6366f1, #8b5cf6, #6366f1);
+    border-radius: 18px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.create-topic-container:hover::before {
+    opacity: 0.1;
+}
+
+/* Loading state para o botão */
+.btn-primary.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.btn-primary.loading::after {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 8px;
+}
+
+/* ========== BOTÕES GERAIS ========== */
+
+.signup-button, .login-button {
     width: 100%;
     padding: 12px 24px;
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
@@ -565,7 +818,7 @@ body {
     overflow: hidden;
 }
 
-.login-button::before {
+.signup-button::before, .login-button::before {
     content: '';
     position: absolute;
     top: 0;
@@ -576,16 +829,16 @@ body {
     transition: left 0.5s;
 }
 
-.login-button:hover::before {
+.signup-button:hover::before, .login-button:hover::before {
     left: 100%;
 }
 
-.login-button:hover {
+.signup-button:hover, .login-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
 }
 
-.login-button:active {
+.signup-button:active, .login-button:active {
     transform: translateY(0);
 }
 
@@ -629,65 +882,7 @@ body {
     text-decoration: underline;
 }
 
-/* Animações */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Media queries */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
-    }
-
-    .search-controls {
-        flex-direction: column;
-    }
-
-    .search-input {
-        min-width: auto;
-    }
-
-    .header {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .logo {
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .signup-container, .login-container {
-        padding: 24px;
-        margin: 0 16px;
-    }
-
-    .header.fixed {
-        padding: 12px 16px;
-    }
-
-    .footer-links {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .footer-links a {
-        display: block;
-        margin: 0;
-    }
-}
-
-/* Estilos específicos para a página de perfil */
+/* ========== PERFIL ========== */
 
 /* Seção do perfil */
 .profile-section {
@@ -837,63 +1032,6 @@ body {
     gap: 20px;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.form-label {
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.form-input {
-    padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    color: #ffffff;
-    font-size: 16px;
-    transition: all 0.3s ease;
-}
-
-.form-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.form-input:focus {
-    outline: none;
-    border-color: #6366f1;
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
-.form-textarea {
-    padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    color: #ffffff;
-    font-size: 16px;
-    font-family: inherit;
-    resize: vertical;
-    min-height: 100px;
-    transition: all 0.3s ease;
-}
-
-.form-textarea::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.form-textarea:focus {
-    outline: none;
-    border-color: #6366f1;
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
 /* Ações do formulário */
 .form-actions {
     display: flex;
@@ -1000,15 +1138,86 @@ body {
     transform: translateY(0);
 }
 
-/* Link ativo no menu */
-.menu-link.active {
-    background: rgba(99, 102, 241, 0.2);
-    border-left-color: #6366f1;
-    color: #ffffff;
+/* ========== ANIMAÇÕES ========== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Responsividade */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========== RESPONSIVIDADE ========== */
 @media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .search-controls {
+        flex-direction: column;
+    }
+
+    .search-input {
+        min-width: auto;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .discussions-header-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .create-topic-button {
+        text-align: center;
+    }
+
+    /* Create Topic específico */
+    .create-topic-container {
+        padding: 25px;
+        margin: 20px auto;
+    }
+
+    .header-title {
+        font-size: 20px;
+    }
+
+    .create-topic-header .header-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .btn-cancel {
+        order: 2;
+    }
+
+    .btn-primary {
+        order: 1;
+    }
+
+    /* Perfil específico */
     .profile-header {
         flex-direction: column;
         align-items: center;
@@ -1037,6 +1246,52 @@ body {
 }
 
 @media (max-width: 480px) {
+    .signup-container, .login-container {
+        padding: 24px;
+        margin: 0 16px;
+    }
+
+    .header.fixed {
+        padding: 12px 16px;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .footer-links a {
+        display: block;
+        margin: 0;
+    }
+
+    /* Create Topic específico */
+    .create-topic-container {
+        padding: 20px;
+    }
+
+    .create-topic-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .create-topic-header .header-icon {
+        margin-right: 0;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+        padding: 12px 16px;
+    }
+
+    .btn {
+        padding: 12px 20px;
+    }
+
+    /* Perfil específico */
     .edit-profile-section,
     .profile-section {
         padding: 20px;
@@ -1061,43 +1316,5 @@ body {
     
     .stat-number {
         font-size: 20px;
-    }
-}
-
-.discussions-header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.create-topic-button {
-    background: linear-gradient(135deg, #8b5cf6, #8b5cf6);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.create-topic-button:hover {
-    background: linear-gradient(135deg, #8b5cf6, #8b5cf6);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-}
-
-@media (max-width: 768px) {
-    .discussions-header-container {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 15px;
-    }
-    
-    .create-topic-button {
-        text-align: center;
     }
 }
