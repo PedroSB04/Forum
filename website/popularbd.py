@@ -15,7 +15,7 @@ def popular_banco():
         (
             'João Silva',
             'joaosilva',
-            'joao.silva@email.com',
+            'joao.silva@mail.com',
             'senha123',
             'joao_perfil.jpg',
             '2024-05-10 10:00:00',
