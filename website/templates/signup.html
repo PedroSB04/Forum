@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Comunidade</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <span class="header-icon">&lt;/&gt;</span>
+            <span>DevForum</span>
+        </div>
+    </header>
+    <main class="main-content">
+        <div class="signup-container">
+            <div class="signup-header">
+                <h1 class="signup-title">Junte-se à Comunidade</h1>
+                <p class="signup-subtitle">Crie sua conta e comece a participar das discussões</p>
+            </div>
+
+            <form id="signupForm" method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="form-group">
+                    {{ form.nome.label(class="form-label") }}
+                    {{ form.nome(class="form-input", placeholder="Seu nome completo", required=True) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.username.label(class="form-label") }}
+                    {{ form.username(class="form-input", placeholder="seuusuario", required=True) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-input", placeholder="seu@email.com", required=True) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.senha.label(class="form-label") }}
+                    {{ form.senha(class="form-input", placeholder="Mínimo 6 caracteres", minlength="6", required=True) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.confirmar_senha.label(class="form-label") }}
+                    {{ form.confirmar_senha(class="form-input", placeholder="Repita sua senha", minlength="6", required=True) }}
+                </div>
+
+                {{ form.botao_de_confirmacao(class="signup-button") }}
+
+                <div class="login-link">
+                    Já tem uma conta? <a href="{{ url_for('auth.login') }}">Fazer login</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post_pai.titulo if post_pai else "Discussão" }} - DevForum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="{{ url_for('views.home') }}" class="logo" style="text-decoration: none;">← Voltar ao Fórum</a>
+        </header>
+
+        {% if post_pai %}
+        <div class="discussions-section">
+            <h1 class="post-title" style="color: #fff; margin-bottom: 20px; font-size: 28px;">{{ post_pai.titulo }}</h1>
+            <div class="post-card original-post-card">
+                <div class="post-header">
+                    <div class="post-author">
+                        {% if post_pai.foto_perfil %}
+                            <img src="{{ post_pai.foto_perfil }}" alt="Avatar" class="author-avatar">
+                        {% else %}
+                            <div class="author-avatar-placeholder">{{ post_pai.username[0]|upper }}</div>
+                        {% endif %}
+                        <a href="{{ url_for('views.perfil', id_usuario=post_pai.id_usuario) }}" class="author-name" style="text-decoration: none; color: #fff;">{{ post_pai.username }}</a>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p class="post-main-content">{{ post_pai.conteudo }}</p>
+                </div>
+            </div>
+
+            <h2 class="discussions-header" style="margin-top: 40px;">Respostas ({{ posts_filhos|length }})</h2>
+            <div class="posts-list">
+                {% if posts_filhos %}
+                    {% for resposta in posts_filhos %}
+                    <div class="post-card reply-card">
+                        <div class="post-header">
+                            <div class="post-author">
+                                {% if resposta.foto_perfil %}
+                                    <img src="{{ resposta.foto_perfil }}" alt="Avatar" class="author-avatar">
+                                {% else %}
+                                    <div class="author-avatar-placeholder">{{ resposta.username[0]|upper }}</div>
+                                {% endif %}
+                                <a href="{{ url_for('views.perfil', id_usuario=resposta.id_usuario) }}" class="author-name" style="text-decoration: none; color: #fff;">{{ resposta.username }}</a>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-main-content">{{ resposta.conteudo }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
+                        Ainda não há respostas. Seja o primeiro a comentar!
+                    </p>
+                {% endif %}
+            </div>
+
+            <div class="reply-form-container">
+                {% if current_user.is_authenticated %}
+                    <h3 style="margin-bottom: 20px;">Deixe sua resposta</h3>
+                    <form method="POST" action="{{ url_for('views.discussao', post_raiz_id=post_pai.id_post) }}" class="create-form">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                            {{ form.conteudo(class="form-textarea", placeholder="Escreva sua resposta aqui...", rows="5", required=True) }}
+                        </div>
+                        {{ form.botao_de_confirmacao(class="btn btn-primary") }}
+                    </form>
+                {% else %}
+                    <p style="text-align: center; font-size: 16px;">
+                        Você precisa <a href="{{ url_for('auth.login', next=request.url) }}" style="color: #6366f1;">fazer login</a> para responder a este tópico.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+            <div class="empty-state" style="height: 50vh;">
+                <h2 class="empty-title">Post não encontrado</h2>
+                <p class="empty-subtitle">O tópico que você está procurando pode ter sido removido ou não existe.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
